@@ -22,15 +22,24 @@
 <body>
     <h1>Select a Model</h1>
     <p>Choose a character persona to chat with:</p>
-    <button onclick="selectModel('Model 1')">Model 1: The Scientist</button>
-    <button onclick="selectModel('Model 2')">Model 2: The Philosopher</button>
-    <button onclick="selectModel('Model 3')">Model 3: The Adventurer</button>
-    <button onclick="selectModel('Model 4')">Model 4: The Artist</button>
+    <button onclick="selectModel('Model 1: The Scientist')">Model 1: The Scientist</button>
+    <button onclick="selectModel('Model 2: The Philosopher')">Model 2: The Philosopher</button>
+    <button onclick="selectModel('Model 3: The Adventurer')">Model 3: The Adventurer</button>
+    <button onclick="selectModel('Model 4: The Artist')">Model 4: The Artist</button>
 
     <script>
+        // Initialize the Telegram Web App API
+        function initTelegramWebApp() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.ready(); // Notify Telegram that the app is ready
+                return true;
+            }
+            return false;
+        }
+
         // Function to send the selected model back to the bot
         function selectModel(model) {
-            if (window.Telegram && Telegram.WebApp) {
+            if (initTelegramWebApp()) {
                 // Send the selected model to the bot
                 Telegram.WebApp.sendData(model);
                 // Close the mini app

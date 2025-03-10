@@ -31,15 +31,20 @@
         // Initialize the Telegram Web App API
         function initTelegramWebApp() {
             if (window.Telegram && Telegram.WebApp) {
+                console.log("Telegram Web App API is available.");
                 Telegram.WebApp.ready(); // Notify Telegram that the app is ready
                 return true;
+            } else {
+                console.log("Telegram Web App API is NOT available.");
+                return false;
             }
-            return false;
         }
 
         // Function to send the selected model back to the bot
         function selectModel(model) {
+            console.log("Selected model:", model);
             if (initTelegramWebApp()) {
+                console.log("Sending data to the bot...");
                 // Send the selected model to the bot
                 Telegram.WebApp.sendData(model);
                 // Close the mini app

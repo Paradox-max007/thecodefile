@@ -32,6 +32,8 @@
         function initTelegramWebApp() {
             if (window.Telegram && Telegram.WebApp) {
                 console.log("Telegram Web App API is available.");
+                console.log("WebApp version:", Telegram.WebApp.version);
+                console.log("WebApp platform:", Telegram.WebApp.platform);
                 Telegram.WebApp.ready(); // Notify Telegram that the app is ready
                 return true;
             } else {

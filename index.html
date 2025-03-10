@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Model</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select a Model</h1>
+    <p>Choose a character persona to chat with:</p>
+    <button onclick="selectModel('Model 1')">Model 1: The Scientist</button>
+    <button onclick="selectModel('Model 2')">Model 2: The Philosopher</button>
+    <button onclick="selectModel('Model 3')">Model 3: The Adventurer</button>
+    <button onclick="selectModel('Model 4')">Model 4: The Artist</button>
+
+    <script>
+        // Function to send the selected model back to the bot
+        function selectModel(model) {
+            if (window.Telegram && Telegram.WebApp) {
+                // Send the selected model to the bot
+                Telegram.WebApp.sendData(model);
+                // Close the mini app
+                Telegram.WebApp.close();
+            } else {
+                alert("This app is not running in Telegram.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -57,6 +57,8 @@
             }
         }
     }
+console.log(window.Telegram); // Should not be undefined
+console.log(Telegram.WebApp); // Should show the WebApp object
 
     // Ensure Telegram Web App API is ready when the page loads
     document.addEventListener("DOMContentLoaded", initTelegramWebApp);

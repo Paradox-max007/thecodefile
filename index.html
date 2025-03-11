@@ -50,7 +50,8 @@
             if (initTelegramWebApp()) {
                 console.log("Sending data to the bot...");
                 // Send the selected model to the bot
-                Telegram.WebApp.sendData(JSON.stringify({ model: model }));
+                Telegram.WebApp.sendData(model);
+
 
                 // Close the mini app
                 Telegram.WebApp.close();

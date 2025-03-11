@@ -18,7 +18,7 @@
             width: 100%;
         }
         button:hover {
-            cursor: pointer
+            cursor: pointer;
         }
     </style>
 </head>
@@ -35,12 +35,11 @@
         function initTelegramWebApp() {
             if (window.Telegram && Telegram.WebApp) {
                 console.log("Telegram Web App API is available.");
-                console.log("WebApp version:", Telegram.WebApp.version);
-                console.log("WebApp platform:", Telegram.WebApp.platform);
                 Telegram.WebApp.ready(); // Notify Telegram that the app is ready
                 return true;
             } else {
                 console.log("Telegram Web App API is NOT available.");
+                alert("This app is not running in Telegram.");
                 return false;
             }
         }
@@ -51,12 +50,10 @@
             if (initTelegramWebApp()) {
                 console.log("Sending data to the bot...");
                 // Send the selected model to the bot
-                Telegram.WebApp.sendData(JSON.stringify({ model: selectedModel }));
+                Telegram.WebApp.sendData(JSON.stringify({ model: model }));
 
                 // Close the mini app
                 Telegram.WebApp.close();
-            } else {
-                alert("This app is not running in Telegram.");
             }
         }
 

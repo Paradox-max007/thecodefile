@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Model Selector</title>
+    <title>Select AI Model</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        button { margin: 10px; padding: 10px 20px; font-size: 18px; }
+    </style>
 </head>
 <body>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <h1>Choose Your AI Model</h1>
+    <button onclick="selectModel('Friendly AI')">Friendly AI</button>
+    <button onclick="selectModel('Professional AI')">Professional AI</button>
+    <button onclick="selectModel('Creative AI')">Creative AI</button>
+    <button onclick="selectModel('Sarcastic AI')">Sarcastic AI</button>
+
+    <h2>Upgrade for Deep Conversations</h2>
+    <button onclick="subscribe('monthly')">Monthly Plan - $10</button>
+    <button onclick="subscribe('yearly')">Yearly Plan - $100</button>
+
     <script>
         const tg = window.Telegram.WebApp;
-
-        if (tg.initDataUnsafe) {
-            tg.ready();
-            tg.expand();
-            console.log("Telegram Web App is ready!");
-        } else {
-            alert("Please open this app through Telegram.");
-        }
+        tg.ready();
+        tg.expand();
 
         function selectModel(model) {
-            const data = JSON.stringify({ selected_model: model });
-            tg.sendData(data); // Sends data back to the Telegram bot
-            tg.close(); // Closes the Web App after sending data
+            tg.sendData(JSON.stringify({ action: 'select_model', model: model }));
+            tg.close();
+        }
+
+        function subscribe(plan) {
+            tg.sendData(JSON.stringify({ action: 'subscribe', plan: plan }));
+            tg.close();
         }
     </script>
-
-    <button onclick="selectModel('Model A')">Select Model A</button>
-    <button onclick="selectModel('Model B')">Select Model B</button>
-    <button onclick="selectModel('Model C')">Select Model C</button>
-    <button onclick="selectModel('Model D')">Select Model D</button>
 </body>
 </html>

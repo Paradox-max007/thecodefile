@@ -30,41 +30,37 @@
     <button onclick="selectModel('Model 3: The Adventurer')">Model 3: The Adventurer</button>
     <button onclick="selectModel('Model 4: The Artist')">Model 4: The Artist</button>
 
-    <script>
-        // Initialize the Telegram Web App API
-        function initTelegramWebApp() {
-    console.log("Checking Telegram Web App API...");
-    if (window.Telegram && Telegram.WebApp) {
-        console.log("Telegram Web App API is available.");
-        console.log("WebApp version:", Telegram.WebApp.version);
-        console.log("WebApp platform:", Telegram.WebApp.platform);
-        console.log("WebApp init data:", Telegram.WebApp.initData);
-        Telegram.WebApp.ready();
-        return true;
-    } else {
-        console.log("Telegram Web App API is NOT available.");
-        alert("This app is not running in Telegram.");
-        return false;
+   <script>
+    // Ensure Telegram Web App API is available
+    function initTelegramWebApp() {
+        if (window.Telegram && Telegram.WebApp) {
+            console.log("Telegram Web App API is available.");
+            Telegram.WebApp.ready();
+            return true;
+        } else {
+            console.log("Telegram Web App API is NOT available.");
+            alert("Please open this app through Telegram.");
+            return false;
+        }
     }
-}
 
-
-        // Function to send the selected model back to the bot
-        function selectModel(model) {
-            console.log("Selected model:", model);
-            if (initTelegramWebApp()) {
-                console.log("Sending data to the bot...");
-                // Send the selected model to the bot
-                Telegram.WebApp.sendData(model);
-
-
-                // Close the mini app
+    // Send selected model data to the bot
+    function selectModel(model) {
+        console.log("Selected model:", model);
+        if (initTelegramWebApp()) {
+            try {
+                Telegram.WebApp.sendData(JSON.stringify({ model: model }));
                 Telegram.WebApp.close();
+            } catch (error) {
+                console.error("Failed to send data:", error);
+                alert("Failed to send data to Telegram.");
             }
         }
+    }
 
-        // Initialize the API when the page loads
-        initTelegramWebApp();
-    </script>
+    // Ensure Telegram Web App API is ready when the page loads
+    document.addEventListener("DOMContentLoaded", initTelegramWebApp);
+</script>
+
 </body>
 </html>

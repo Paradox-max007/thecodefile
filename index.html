@@ -33,16 +33,21 @@
     <script>
         // Initialize the Telegram Web App API
         function initTelegramWebApp() {
-            if (window.Telegram && Telegram.WebApp) {
-                console.log("Telegram Web App API is available.");
-                Telegram.WebApp.ready(); // Notify Telegram that the app is ready
-                return true;
-            } else {
-                console.log("Telegram Web App API is NOT available.");
-                alert("This app is not running in Telegram.");
-                return false;
-            }
-        }
+    console.log("Checking Telegram Web App API...");
+    if (window.Telegram && Telegram.WebApp) {
+        console.log("Telegram Web App API is available.");
+        console.log("WebApp version:", Telegram.WebApp.version);
+        console.log("WebApp platform:", Telegram.WebApp.platform);
+        console.log("WebApp init data:", Telegram.WebApp.initData);
+        Telegram.WebApp.ready();
+        return true;
+    } else {
+        console.log("Telegram Web App API is NOT available.");
+        alert("This app is not running in Telegram.");
+        return false;
+    }
+}
+
 
         // Function to send the selected model back to the bot
         function selectModel(model) {

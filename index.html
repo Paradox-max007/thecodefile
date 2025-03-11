@@ -30,39 +30,54 @@
     <button onclick="selectModel('Model 3: The Adventurer')">Model 3: The Adventurer</button>
     <button onclick="selectModel('Model 4: The Artist')">Model 4: The Artist</button>
 
-   <script>
-    // Ensure Telegram Web App API is available
-    function initTelegramWebApp() {
-        if (window.Telegram && Telegram.WebApp) {
-            console.log("Telegram Web App API is available.");
-            Telegram.WebApp.ready();
-            return true;
-        } else {
-            console.log("Telegram Web App API is NOT available.");
-            alert("Please open this app through Telegram.");
-            return false;
-        }
-    }
+    <p id="status"></p>
 
-    // Send selected model data to the bot
-    function selectModel(model) {
-        console.log("Selected model:", model);
-        if (initTelegramWebApp()) {
-            try {
-                Telegram.WebApp.sendData(JSON.stringify({ model: model }));
-                Telegram.WebApp.close();
-            } catch (error) {
-                console.error("Failed to send data:", error);
-                alert("Failed to send data to Telegram.");
+    <script>
+        const status = document.getElementById('status');
+
+        // Ensure Telegram Web App API is available
+        function initTelegramWebApp() {
+            console.log('Checking Telegram Web App API...');
+
+            if (window.Telegram && Telegram.WebApp) {
+                console.log('✅ Telegram Web App API is available:', Telegram.WebApp);
+                Telegram.WebApp.ready();
+                status.textContent = '✅ Telegram Web App API is ready!';
+                Telegram.WebApp.showAlert('Web App API is working!');
+                return true;
+            } else {
+                console.log('❌ Telegram Web App API is NOT available.');
+                status.textContent = '❌ Telegram Web App API is NOT available. Please open this app through Telegram.';
+                alert('Please open this app through Telegram.');
+                return false;
             }
         }
-    }
-console.log(window.Telegram); // Should not be undefined
-console.log(Telegram.WebApp); // Should show the WebApp object
 
-    // Ensure Telegram Web App API is ready when the page loads
-    document.addEventListener("DOMContentLoaded", initTelegramWebApp);
-</script>
+        // Send selected model data to the bot
+        function selectModel(model) {
+            console.log('Selected model:', model);
 
+            if (initTelegramWebApp()) {
+                try {
+                    const data = JSON.stringify({ model: model });
+                    console.log('Sending data to Telegram:', data);
+                    Telegram.WebApp.sendData(data);
+                    Telegram.WebApp.close();
+                } catch (error) {
+                    console.error('❌ Failed to send data:', error);
+                    alert('Failed to send data to Telegram.');
+                }
+            }
+        }
+
+        // Debug logs
+        console.log('window.Telegram:', window.Telegram); // Should not be undefined
+        if (window.Telegram) {
+            console.log('Telegram.WebApp:', Telegram.WebApp); // Should show WebApp object
+        }
+
+        // Ensure Telegram Web App API is ready when the page loads
+        document.addEventListener('DOMContentLoaded', initTelegramWebApp);
+    </script>
 </body>
 </html>

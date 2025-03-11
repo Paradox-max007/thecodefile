@@ -3,81 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Model</title>
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
         }
         button {
+            background-color: #0088cc;
+            color: white;
+            border: none;
             padding: 10px 20px;
-            font-size: 16px;
             margin: 10px;
-            display: block;
-            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
         button:hover {
-            cursor: pointer;
+            background-color: #005f8a;
         }
     </style>
 </head>
 <body>
     <h1>Select a Model</h1>
-    <p>Choose a character persona to chat with:</p>
-    <button onclick="selectModel('Model 1: The Scientist')">Model 1: The Scientist</button>
-    <button onclick="selectModel('Model 2: The Philosopher')">Model 2: The Philosopher</button>
-    <button onclick="selectModel('Model 3: The Adventurer')">Model 3: The Adventurer</button>
-    <button onclick="selectModel('Model 4: The Artist')">Model 4: The Artist</button>
-
-    <p id="status"></p>
+    <button onclick="selectModel('Model A')">Select Model A</button>
+    <button onclick="selectModel('Model B')">Select Model B</button>
 
     <script>
-        const status = document.getElementById('status');
+        const tg = window.Telegram.WebApp;
 
-        // Ensure Telegram Web App API is available
-        function initTelegramWebApp() {
-            console.log('Checking Telegram Web App API...');
-
-            if (window.Telegram && Telegram.WebApp) {
-                console.log('✅ Telegram Web App API is available:', Telegram.WebApp);
-                Telegram.WebApp.ready();
-                status.textContent = '✅ Telegram Web App API is ready!';
-                Telegram.WebApp.showAlert('Web App API is working!');
-                return true;
-            } else {
-                console.log('❌ Telegram Web App API is NOT available.');
-                status.textContent = '❌ Telegram Web App API is NOT available. Please open this app through Telegram.';
-                alert('Please open this app through Telegram.');
-                return false;
-            }
+        if (tg.initDataUnsafe) {
+            tg.ready();
+            tg.expand();
+            console.log("Telegram Web App is ready!");
+        } else {
+            alert("Please open this app through Telegram.");
         }
 
-        // Send selected model data to the bot
         function selectModel(model) {
-            console.log('Selected model:', model);
-
-            if (initTelegramWebApp()) {
-                try {
-                    const data = JSON.stringify({ model: model });
-                    console.log('Sending data to Telegram:', data);
-                    Telegram.WebApp.sendData(data);
-                    Telegram.WebApp.close();
-                } catch (error) {
-                    console.error('❌ Failed to send data:', error);
-                    alert('Failed to send data to Telegram.');
-                }
-            }
+            tg.sendData(JSON.stringify({ selected_model: model })); // Sends data back to your bot
+            alert(`You selected: ${model}`); // Just for quick feedback
         }
-
-        // Debug logs
-        console.log('window.Telegram:', window.Telegram); // Should not be undefined
-        if (window.Telegram) {
-            console.log('Telegram.WebApp:', Telegram.WebApp); // Should show WebApp object
-        }
-
-        // Ensure Telegram Web App API is ready when the page loads
-        document.addEventListener('DOMContentLoaded', initTelegramWebApp);
     </script>
 </body>
 </html>
